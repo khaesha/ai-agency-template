@@ -21,6 +21,7 @@ flowchart TD
     Human -->|Request changes| Prepare
     Human -->|Hold| Hold["Keep the current preview"]
     Human -->|Approve| Approved["Record approval"]
+    Approved --> Learn["Review workflow improvements"]
 ```
 
 A `Plan` request stops after the test plan in direct mode or after the backlog in backlog mode. A `Run` request pauses at the preview or at a blocker that prevents completion. Approval closes a direct run. For backlog work, the next eligible PLAN starts when you ask to run it.
@@ -52,16 +53,15 @@ Use a ticket ID or link when the assistant can read the tracker. If access is un
 
 ### Start from a single ticket
 
-Copy this prompt and replace the example ticket with your own. Choose a short run ID and reuse it for follow-ups. The first line makes the prompt portable across assistants.
+With the project's AI Agency instructions loaded, send the ticket link in one line.
 
 ```text
-Read .agents/skills/agency-orchestrate/SKILL.md and follow the workflow.
-Run empty-table in direct mode. Ticket UI-217: Show an empty state when the
-results table has no rows. Use the ticket text and the repository as context.
-Prepare acceptance criteria and a test plan, then implement and stop at preview.
+Read <ticket-url>
 ```
 
-To review the scope, criteria, and test plan before coding, replace `Run` with `Plan` and end with “Prepare only.” Then send `Run empty-table.` in the same workspace when ready.
+`Read this <ticket-url>` works the same way. The assistant reads the ticket, chooses or reuses a run ID, prepares the acceptance criteria and test plan, and carries out implementation and QA before stopping at the human preview. If the ticket is inaccessible, paste its description.
+
+For a read-only request, use `Summarize <ticket-url>`. To review the plan before implementation, use `Plan empty-table using <ticket-url>`, then send `Run empty-table` when ready. If your assistant does not load project instructions automatically, ask it to read [AGENTS.md](AGENTS.md) before using the shortcut.
 
 ### Start from a feature or an existing plan
 
@@ -100,6 +100,18 @@ Each file in `agency/roles/` gives reusable instructions for a responsibility. T
 | [QA](agency/roles/QA.md) | Prepares the test plan before implementation and verifies the result against the acceptance criteria afterward. |
 
 The Orchestrator coordinates the work, updates the run records, and waits for your preview decision. It can use a named subagent, brief a generic subagent with the same role file, or carry out the relevant roles in sequence in one session.
+
+## Improve the workflow
+
+After you approve a ticket or PLAN, the Orchestrator reviews QA outcomes, handoffs, and your feedback. It records findings in the approved preview. A recurring problem or a confirmed project requirement can lead to a proposed edit to a role, skill, or project default in the current repo.
+
+The preview lists the proposal ID and the exact edit. To approve that edit, send a separate request using the run ID and item ID from the preview.
+
+```text
+Apply improvement empty-table TICKET IMP-01
+```
+
+For a backlog run, use the PLAN ID in place of `TICKET`. See [agency/WORKFLOW.md](agency/WORKFLOW.md#5-workflow-improvement-review) for the review and apply rules.
 
 ## Where to look
 

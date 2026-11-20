@@ -6,13 +6,17 @@ These are natural-language instructions to the assistant. Start by reading `agen
 
 | Action | Orchestrator behavior |
 | --- | --- |
+| `Read <ticket-url>` or `Read this <ticket-url>` | Resolve one issue-tracker ticket and run it through preview. Use direct mode for a new run. |
 | `Plan <run-id>` | In direct mode, prepare the ticket record with acceptance criteria and a test plan. In backlog mode, prepare the backlog. Stop before implementation. |
 | `Run <run-id> [PLAN-ID]` | Open or initialize the run. Execute the direct ticket or one eligible PLAN through preview. Continue the active PLAN first if there is one. |
 | `Resume <run-id>` | Read the saved state. Continue active work when possible. If a decision is pending, show the preview. If only prepared work is queued, report what is ready. |
 | `Status <run-id>` | Report state, the next eligible item, blockers, or the pending preview. Read only. |
 | `Approve / Request changes / Hold <run-id> <item-id> <revision>` | Apply the explicit decision to the current preview using the rules below. |
+| `Apply improvement <run-id> <item-id> <proposal-id>` | Apply the named workflow change from the approved preview. Follow the improvement review rules below. |
 
 Use a run ID made of lowercase letters, digits, and hyphens. Choose a clear ID if the user supplies a new scope and requests work without naming a run. Ask for identification if several existing runs match or a supplied ID already belongs to different work. Treat a repeat request for the same scope as a continuation. An explicit plan-and-run request authorizes both actions.
+
+Apply the ticket shortcut only to a standalone request in one of the forms above for a single issue-tracker ticket. Honor explicit requests to summarize, inspect only, or plan only. Handle other links as ordinary read requests. Read the ticket before implementing. If it is inaccessible and its description is needed, ask the user to paste it. Reuse a run that matches the ticket's tracker identity and keep its saved mode. If none matches, choose a run ID and report it with the outcome.
 
 If the item is `AWAITING_HUMAN`, route it through the preview decision before resuming execution or selecting another item. A direct run ends at `APPROVED`. Report an unknown or ineligible requested PLAN and its blocker before selecting any other work.
 
@@ -56,9 +60,21 @@ Use named specialists when configured and supported. Otherwise, give a generic s
 
 | Decision | Result |
 | --- | --- |
-| `APPROVE` | Set the item to `APPROVED`. For a backlog run, clear the active PLAN. Continue to another PLAN only when the user also asks to run it. Merging, deployment, and publication require their own instructions. |
+| `APPROVE` | Set the item to `APPROVED`. For a backlog run, clear the active PLAN. Review workflow improvements before any requested continuation. Continue to another PLAN only when the user also asks to run it. Merging, deployment, and publication require their own instructions. |
 | `REQUEST CHANGES` | Record the feedback and return the same item to `IN_PROGRESS`. Update affected criteria or steps, reimplement as needed, and rerun QA. Pause affected work if a material scope decision remains unresolved. Issue a new preview revision. |
 | `HOLD` | Record the hold and keep the item at `AWAITING_HUMAN` with the same preview. |
+
+## 5. Workflow improvement review
+
+After approving a ticket or PLAN, review its QA findings, retries, handoffs, and human feedback. Compare any suspected gap with the project defaults and the role or skill used. If the gap could recur, look for related evidence in earlier approved previews.
+
+- Record an observation when a finding may recur but the evidence is limited. Propose an edit when the same gap affects more than one work item or a standing project requirement is confirmed by the owner or repo instructions. Keep ticket-specific findings in the run. Record `No update recommended` when the review finds no reusable improvement.
+- Use `agency/roles/` for changes to responsibilities or handoff expectations, `.agents/skills/` for changes to repeatable procedures, and `agency/PROJECT.md` for project-specific paths, commands, or conventions. Prefer a small edit in the local project that produced the evidence.
+- Write the outcome in the approved preview's **Workflow improvement review** section. For each new proposal, record an ID such as `IMP-01`, the target file, the exact edit, links to the evidence, and the expected benefit. Mark it `PENDING` and report its ID to the user. If the same change is already pending, link to its original preview and report the original run, item, and proposal IDs. On repeated approval, finish a missing review or report the recorded outcome.
+
+An approved work item and its improvement proposals have separate decisions. Pending proposals leave the work item approved and any requested continuation can proceed.
+
+On `Apply improvement`, locate the named proposal in the approved preview. For a `PENDING` proposal, compare the proposed edit with the current project files. Apply only the selected edit when it still fits, then verify the diff and mark it `APPLIED` in that preview. If later changes make the proposal unnecessary or require a different edit, report why and mark it `SUPERSEDED`. Obtain approval for any replacement proposal. A repeated apply request reports the recorded result.
 
 ## State and recovery
 

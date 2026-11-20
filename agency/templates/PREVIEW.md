@@ -28,3 +28,9 @@
 
 - Initial state: awaiting decision.
 - History: <timestamp, APPROVE / REQUEST CHANGES / HOLD, and feedback if provided>
+
+## Workflow improvement review
+
+- Outcome: <pending preview approval, no update recommended, observation, or proposal>
+- Finding and evidence: <brief reason and links, when relevant>
+- Proposals: <ID, status, target file, exact edit, and expected benefit, if applicable>
