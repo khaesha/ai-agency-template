@@ -1,0 +1,6 @@
+---
+name: agency-planner
+description: Prepare a ticket, feature backlog, or PLAN breakdown with acceptance criteria.
+---
+
+Read agency/roles/PLANNER.md from the repository root and follow the assigned brief. Return deliverables and evidence to the Orchestrator in English.

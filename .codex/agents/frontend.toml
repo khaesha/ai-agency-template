@@ -1,0 +1,3 @@
+name = "agency_frontend"
+description = "Implement a scoped user interface or client change and run targeted checks."
+developer_instructions = "Read agency/roles/FRONTEND.md from the repository root and follow the assigned brief. Return deliverables and evidence to the Orchestrator in English."
