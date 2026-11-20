@@ -2,6 +2,29 @@
 
 A reusable development workflow for a single ticket, a task description, or a larger feature. The main assistant acts as the Orchestrator. Planner, Backend, Frontend, and QA roles are available when the work needs them. The same workflow can run in one session or delegate to specialists.
 
+## How it works
+
+```mermaid
+flowchart TD
+    Input["Ticket, task, or feature brief"] --> Mode{"Which mode?"}
+    Mode -->|Direct| Ticket["Prepare TICKET.md"]
+    Mode -->|Backlog| Backlog["Build BACKLOG.md"]
+    Backlog --> Select["Select one eligible PLAN"]
+    Ticket --> Prepare["Write acceptance criteria and a test plan"]
+    Select --> Prepare
+    Prepare --> Implement["Implement scoped work"]
+    Implement --> QA{"QA result"}
+    QA -->|Checks fail| Implement
+    QA -->|Required evidence missing| Blocked["Record a blocker"]
+    QA -->|Checks pass| Preview["Save a versioned preview"]
+    Preview --> Human{"Human decision"}
+    Human -->|Request changes| Prepare
+    Human -->|Hold| Hold["Keep the current preview"]
+    Human -->|Approve| Approved["Record approval"]
+```
+
+A `Plan` request stops after the test plan in direct mode or after the backlog in backlog mode. A `Run` request pauses at the preview or at a blocker that prevents completion. Approval closes a direct run. For backlog work, the next eligible PLAN starts when you ask to run it.
+
 ## 1. Add the template to your project
 
 1. Extract the archive and copy `agency/` and `.agents/` into the root of the repository or workspace where you want to work. Copy `AGENTS.md` or add its **AI Agency workflow** section to the instructions you already use. Preserve existing project instructions and check for path conflicts before copying. Keep this README as a separate guide if the project already has one.
@@ -15,7 +38,7 @@ A reusable development workflow for a single ticket, a task description, or a la
 | Gemini CLI | Use `GEMINI.md`, which imports `AGENTS.md`. If you already use `GEMINI.md`, add `@./AGENTS.md` if needed. Copy `.gemini/agents/` to enable the named roles. Gemini CLI can discover the shared skills in `.agents/skills/`. | Use the portable prompt. In an interactive session, `/skills list` shows the discovered skills. |
 | Other repo-aware assistants | Use the shared files from step 1. | Use the portable prompt to load the workflow by path. |
 
-Use the same prompt with or without custom agents. A client that supports generic delegation can pass the role instructions from `agency/roles/` to a subagent. A client without delegation can run the roles sequentially. A chat-only assistant needs the relevant files or excerpts pasted or attached. It can draft plans and review supplied evidence. Applying changes and running checks require workspace access or a person to do those steps.
+Use the same prompt with or without custom agents. A chat-only assistant needs the relevant files or excerpts pasted or attached. It can draft plans and review supplied evidence. Applying changes and running checks require workspace access or a person to do those steps.
 
 ## 2. Choose a starting point
 
@@ -64,6 +87,19 @@ The assistant prepares acceptance criteria and a test plan before implementation
 | Read progress without editing | `Status empty-table.` |
 
 Use the ID and revision shown in your preview. Approval by itself records your decision. A separate run request, or an explicit continuation in the same message, starts the next PLAN. You can switch assistants by opening the same workspace and resuming the same run ID.
+
+## How roles work
+
+Each file in `agency/roles/` gives reusable instructions for a responsibility. The Orchestrator pairs it with the current ticket or PLAN task, which supplies the scope, acceptance criteria, and checks for that assignment. Skills describe repeatable procedures, such as how to write a test plan or verify a result.
+
+| Role | Responsibility |
+| --- | --- |
+| [Planner](agency/roles/PLANNER.md) | Turns the input into a scoped ticket, backlog, or PLAN breakdown with acceptance criteria. |
+| [Backend](agency/roles/BACKEND.md) | Implements the assigned server, data, integration, or CLI change and reports the checks it ran. |
+| [Frontend](agency/roles/FRONTEND.md) | Implements the assigned client or UI change and reports checks and preview steps. |
+| [QA](agency/roles/QA.md) | Prepares the test plan before implementation and verifies the result against the acceptance criteria afterward. |
+
+The Orchestrator coordinates the work, updates the run records, and waits for your preview decision. It can use a named subagent, brief a generic subagent with the same role file, or carry out the relevant roles in sequence in one session.
 
 ## Where to look
 
