@@ -44,10 +44,11 @@ The Orchestrator owns run documents. Preserve existing IDs, history, and verifie
 
 ## 3. Implement and verify
 
-1. Give each implementation role the ticket or task path, scope, writable areas, applicable criteria, contracts, and checks. For direct work with one owner, pass `TICKET.md` as the brief. Run sequentially by default. Parallel work requires satisfied dependencies, disjoint write scopes, and a workspace that supports it.
-2. Inspect the changes and route QA against the criteria and actual workspace state. Record commands or reproduction steps and observed results. For several tasks, verify the integrated outcome and reuse current task evidence when it covers the same behavior.
-3. Send failures and regressions back to the assigned owner, then rerun the affected checks. If a required check cannot run, try a check that provides equivalent evidence. Record the gap as a blocker if required evidence is still missing. Report optional gaps in the preview.
-4. Create a preview once each required AC has adequate evidence and, in backlog mode, all implementation tasks are `VERIFIED`.
+1. Before assigning Frontend or Backend work that changes source code, check that `agency/skills/ponytail/SKILL.md` is readable in the workspace. The bundled file is required, including in single-session mode. If it cannot be read, set the review item to `BLOCKED` before the affected edits and report the path. Resume implementation once the file is restored and readable.
+2. Give each implementation role the ticket or task path, scope, writable areas, applicable criteria, contracts, and checks. For direct work with one owner, pass `TICKET.md` as the brief. Run sequentially by default. Parallel work requires satisfied dependencies, disjoint write scopes, and a workspace that supports it.
+3. Inspect the changes and route QA against the criteria and actual workspace state. Record commands or reproduction steps and observed results. For several tasks, verify the integrated outcome and reuse current task evidence when it covers the same behavior.
+4. Send failures and regressions back to the assigned owner, then rerun the affected checks. If a required check cannot run, try a check that provides equivalent evidence. Record the gap as a blocker if required evidence is still missing. Report optional gaps in the preview.
+5. Create a preview once each required AC has adequate evidence and, in backlog mode, all implementation tasks are `VERIFIED`.
 
 Use named specialists when configured and supported. Otherwise, give a generic subagent the corresponding file from `agency/roles/` and the task brief. If delegation is unavailable, perform the roles sequentially in the main session and record `single-session QA`. For chat without workspace access, provide draft changes or review steps and request the needed execution evidence. Mark checks as `NOT_RUN` until there is an actual result.
 

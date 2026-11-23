@@ -32,6 +32,8 @@ A `Plan` request stops after the test plan in direct mode or after the backlog i
 2. Open that root in your assistant. The table below shows the optional files for native agent integration. Review the files before enabling them or granting workspace trust.
 3. Edit [agency/PROJECT.md](agency/PROJECT.md) if you want reusable defaults for sources, code areas, test commands, or preview steps. You can leave the defaults as supplied and specify everything needed for a single run in your prompt.
 
+Copying `agency/` also brings the [Ponytail skill](agency/skills/ponytail/SKILL.md) and its [license](agency/skills/ponytail/LICENSE). The [upstream metadata](agency/skills/ponytail/upstream.json) records the bundled version. Frontend and Backend read the bundled skill from the project before changing source code, including in single-session runs. It works without a separate Ponytail installation. If the bundled file cannot be read, restore it before resuming the blocked implementation.
+
 | Assistant | Setup | How to start |
 | --- | --- | --- |
 | Codex | Use `AGENTS.md` and shared skills. Copy `.codex/agents/` to enable the named roles. | Use the portable prompt below or select the `agency-orchestrate` skill. |
@@ -113,6 +115,14 @@ Apply improvement empty-table TICKET IMP-01
 
 For a backlog run, use the PLAN ID in place of `TICKET`. See [agency/WORKFLOW.md](agency/WORKFLOW.md#5-workflow-improvement-review) for the review and apply rules.
 
+## Update the bundled Ponytail skill
+
+The [update workflow](.github/workflows/update-ponytail.yml) belongs in the template repository. It checks the latest stable release every Monday at 02:17 UTC (09:17 WIB). A change to the skill or license opens a pull request with the files and updated upstream metadata.
+
+1. In **Settings → Actions → General → Workflow permissions**, enable **Allow GitHub Actions to create and approve pull requests**. The workflow uses this setting to open pull requests.
+2. Once the workflow is on the default branch, open **Actions → Check Ponytail updates → Run workflow** to check on demand.
+3. Review the skill and license against the linked upstream release. Merge the pull request when the changes are acceptable. Build the next distribution archive from the merged commit.
+
 ## Where to look
 
 | Path | What it contains |
@@ -120,6 +130,7 @@ For a backlog run, use the PLAN ID in place of `TICKET`. See [agency/WORKFLOW.md
 | [agency/PROJECT.md](agency/PROJECT.md) | Optional defaults that you can edit by hand. |
 | [agency/WORKFLOW.md](agency/WORKFLOW.md) | Intake, execution, QA, and review rules. |
 | `agency/roles/` | Shared role instructions for all assistants. |
+| `agency/skills/ponytail/` | Bundled implementation skill used by Backend and Frontend. |
 | `.agents/skills/` | Shared orchestration, planning, and verification skills. |
 | `agency/templates/` | Markdown formats used to write run records. |
 | `agency/runs/<run-id>/` | Ticket or backlog, work evidence, and preview history. Created when you start a run. |
