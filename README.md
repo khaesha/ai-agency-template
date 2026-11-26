@@ -106,7 +106,7 @@ The Orchestrator coordinates the work, updates the run records, and waits for yo
 
 ### Request a security audit
 
-The workflow routes security-sensitive changes to Security Audit before preview. To request a standalone, read-only review, provide the scope in a prompt.
+During planning, the Orchestrator records why an audit applies and what it should cover in the ticket or selected PLAN. QA includes applicable security acceptance criteria in the test plan. The preview records the exact version Security Audit reviewed, its findings, and the status of each fix. Changes that affect the audit evidence trigger a follow-up review of the affected scope before preview. To request a standalone, read-only review, provide the scope in a prompt.
 
 ```text
 Security audit the current working-tree changes.
