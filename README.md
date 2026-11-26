@@ -1,6 +1,6 @@
 # AI Agency Template
 
-A reusable development workflow for a single ticket, a task description, or a larger feature. The main assistant acts as the Orchestrator. Planner, Backend, Frontend, QA, and Security Audit roles are available when the work needs them. The same workflow can run in one session or delegate to specialists.
+A reusable development workflow for a single ticket, a task description, or a larger feature. The main assistant acts as the Orchestrator. Planner, Backend, Frontend, Code Reviewer, QA, and Security Audit roles are available when the work needs them. The same workflow can run in one session or delegate to specialists.
 
 ## How it works
 
@@ -13,10 +13,10 @@ flowchart TD
     Ticket --> Prepare["Write acceptance criteria and a test plan"]
     Select --> Prepare
     Prepare --> Implement["Implement scoped work"]
-    Implement --> QA{"QA result"}
-    QA -->|Checks fail| Implement
-    QA -->|Required evidence missing| Blocked["Record a blocker"]
-    QA -->|Checks pass| Preview["Save a versioned preview"]
+    Implement --> Verify["Verify changes and run applicable reviews"]
+    Verify -->|Changes needed| Implement
+    Verify -->|Required evidence missing| Blocked["Record a blocker"]
+    Verify -->|Ready| Preview["Save a versioned preview"]
     Preview --> Human{"Human decision"}
     Human -->|Request changes| Prepare
     Human -->|Hold| Hold["Keep the current preview"]
@@ -99,10 +99,13 @@ Each file in `agency/roles/` gives reusable instructions for a responsibility. T
 | [Planner](agency/roles/PLANNER.md) | Turns the input into a scoped ticket, backlog, or PLAN breakdown with acceptance criteria. |
 | [Backend](agency/roles/BACKEND.md) | Implements the assigned server, data, integration, or CLI change and reports the checks it ran. |
 | [Frontend](agency/roles/FRONTEND.md) | Implements the assigned client or UI change and reports checks and preview steps. |
+| [Code Reviewer](agency/roles/CODE-REVIEWER.md) | Reviews the integrated change for correctness, regressions, compatibility, and maintainability. |
 | [QA](agency/roles/QA.md) | Prepares the test plan before implementation and verifies the result against the acceptance criteria afterward. |
 | [Security Audit](agency/roles/SECURITY-AUDIT.md) | Reviews security-sensitive changes and reports findings, impact, and remediation. |
 
 The Orchestrator coordinates the work, updates the run records, and waits for your preview decision. It can use a named subagent, brief a generic subagent with the same role file, or carry out the relevant roles in sequence in one session.
+
+The Orchestrator routes integrated changes to Code Reviewer before final QA and any security audit when the change materially affects a shared contract, data migration, or design across modules. You can also request it with `Run <run-id> with a code review`. The preview records the reviewed version and any findings.
 
 ### Request a security audit
 

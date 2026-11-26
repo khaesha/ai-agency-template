@@ -16,6 +16,12 @@
 2. <Fixture and steps to try.>
 3. <Expected result.>
 
+## Code review (when performed)
+
+- Reviewed scope and version: <areas reviewed and corresponding commit or file hashes>
+- Findings and status: <severity, location, impact, recommended fix, and resolution status, or none reported>
+- Coverage limits: <areas and assumptions that could not be verified>
+
 ## QA results
 
 | AC | Result | Evidence |
