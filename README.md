@@ -28,7 +28,7 @@ A `Plan` request stops after the test plan in direct mode or after the backlog i
 
 ## 1. Add the template to your project
 
-1. Extract the archive and copy `agency/` and `.agents/` into the root of the repository or workspace where you want to work. Copy `AGENTS.md` or add its **AI Agency workflow** section to the instructions you already use. Preserve existing project instructions and check for path conflicts before copying. Keep this README as a separate guide if the project already has one.
+1. Extract the archive and copy `agency/` and `.agents/` into the root of the repository or workspace where you want to work. Copy `AGENTS.md` if the project has no file at that path. For a shared installation, you can also add its **AI Agency workflow** section to the instructions you already use. Preserve existing project instructions and check for path conflicts before copying. For a local installation, apply the `.gitignore` rules below. Keep this README with the template as an installation guide.
 2. Open that root in your assistant. The table below shows the optional files for native agent integration. Review the files before enabling them or granting workspace trust.
 3. Edit [agency/PROJECT.md](agency/PROJECT.md) if you want reusable defaults for sources, code areas, test commands, or preview steps. You can leave the defaults as supplied and specify everything needed for a single run in your prompt.
 
@@ -42,6 +42,20 @@ Copying `agency/` also brings the [Ponytail skill](agency/skills/ponytail/SKILL.
 | Other repo-aware assistants | Use the shared files from step 1. | Use the portable prompt to load the workflow by path. |
 
 Use the same prompt with or without custom agents. A chat-only assistant needs the relevant files or excerpts pasted or attached. It can draft plans and review supplied evidence. Applying changes and running checks require workspace access or a person to do those steps.
+
+### Install with an AI assistant
+
+Open the destination project in an assistant with workspace access. Give it the path to the template checkout or archive.
+
+```text
+Install AI Agency in this project from <template-path-or-archive>.
+Read the template README and follow its AI installation rules, including .gitignore verification.
+```
+
+1. Use the template's README as the guide. Extract an archive outside the destination project, then copy the shared workflow and the adapters for the requested assistant. Use the current assistant's adapters if it is supported and none were requested. Keep the archive, the template README, and `.github/workflows/update-ponytail.yml` with the source template.
+2. Check destination paths before copying. Preserve existing project files and report conflicting paths. If a project file already occupies the root `AGENTS.md`, install the template's instructions as `agency/AGENTS.md`. Add an import of that copy to any newly installed `CLAUDE.md` or `GEMINI.md` alongside its import of the project's root `AGENTS.md`. Preserve any existing `CLAUDE.md` and `GEMINI.md`. When the assistant needs help loading the Agency instructions, ask it to read the installed `AGENTS.md` or `agency/AGENTS.md`, or use the portable workflow prompt below.
+3. In the destination `.gitignore`, add or update one block between `# BEGIN AI Agency` and `# END AI Agency`. Preserve the rest of the file. Add a root-relative rule for each installed file, such as `/agency/WORKFLOW.md`, `/.agents/skills/agency-orchestrate/SKILL.md`, or `/.codex/agents/backend.toml`. Include any new instruction files and keep previous AI Agency entries on reruns without duplicating them. Use file paths so project files in shared directories remain eligible for commits. Add the rules before copying new files.
+4. From the destination, verify every installed path with `git check-ignore` and check for tracked or staged paths with `git ls-files -- <paths>`. Report any path that Git still sees, including already tracked template files. Leave the index untouched. If the destination is outside a Git repository, write the rules and report that Git verification is pending.
 
 ## 2. Choose a starting point
 
@@ -63,7 +77,7 @@ Read <ticket-url>
 
 `Read this <ticket-url>` works the same way. The assistant reads the ticket, chooses or reuses a run ID, prepares the acceptance criteria and test plan, and carries out implementation and QA before stopping at the human preview. If the ticket is inaccessible, paste its description.
 
-For a read-only request, use `Summarize <ticket-url>`. To review the plan before implementation, use `Plan empty-table using <ticket-url>`, then send `Run empty-table` when ready. If your assistant does not load project instructions automatically, ask it to read [AGENTS.md](AGENTS.md) before using the shortcut.
+For a read-only request, use `Summarize <ticket-url>`. To review the plan before implementation, use `Plan empty-table using <ticket-url>`, then send `Run empty-table` when ready. If your assistant needs help loading the AI Agency instructions, ask it to read the installed `AGENTS.md` or `agency/AGENTS.md` before using the shortcut.
 
 ### Start from a feature or an existing plan
 
