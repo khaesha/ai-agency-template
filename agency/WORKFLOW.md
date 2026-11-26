@@ -11,6 +11,7 @@ These are natural-language instructions to the assistant. Start by reading `agen
 | `Run <run-id> [PLAN-ID]` | Open or initialize the run. Execute the direct ticket or one eligible PLAN through preview. Continue the active PLAN first if there is one. |
 | `Resume <run-id>` | Read the saved state. Continue active work when possible. If a decision is pending, show the preview. If only prepared work is queued, report what is ready. |
 | `Status <run-id>` | Report state, the next eligible item, blockers, or the pending preview. Read only. |
+| `Security audit <scope>` | Review the requested files or changes using the Security Audit role and return findings. Read only. |
 | `Approve / Request changes / Hold <run-id> <item-id> <revision>` | Apply the explicit decision to the current preview using the rules below. |
 | `Apply improvement <run-id> <item-id> <proposal-id>` | Apply the named workflow change from the approved preview. Follow the improvement review rules below. |
 
@@ -47,10 +48,11 @@ The Orchestrator owns run documents. Preserve existing IDs, history, and verifie
 1. Before assigning Frontend or Backend work that changes source code, check that `agency/skills/ponytail/SKILL.md` is readable in the workspace. The bundled file is required, including in single-session mode. If it cannot be read, set the review item to `BLOCKED` before the affected edits and report the path. Resume implementation once the file is restored and readable.
 2. Give each implementation role the ticket or task path, scope, writable areas, applicable criteria, contracts, and checks. For direct work with one owner, pass `TICKET.md` as the brief. Run sequentially by default. Parallel work requires satisfied dependencies, disjoint write scopes, and a workspace that supports it.
 3. Inspect the changes and route QA against the criteria and actual workspace state. Record commands or reproduction steps and observed results. For several tasks, verify the integrated outcome and reuse current task evidence when it covers the same behavior.
-4. Send failures and regressions back to the assigned owner, then rerun the affected checks. If a required check cannot run, try a check that provides equivalent evidence. Record the gap as a blocker if required evidence is still missing. Report optional gaps in the preview.
-5. Create a preview once each required AC has adequate evidence and, in backlog mode, all implementation tasks are `VERIFIED`.
+4. Before preview, route a security audit if the user requests one or the change affects a trust boundary, access control, secrets, sensitive data, or deployment permissions. Give Security Audit the scope, change reference, and relevant project constraints. Use [the role brief](roles/SECURITY-AUDIT.md) for delegated and single-session reviews.
+5. Send failures and regressions back to the assigned owner, then rerun the affected checks. Send security findings that invalidate required criteria or checks back through the same process. If a required check cannot run, try a check that provides equivalent evidence. Record the gap as a blocker if required evidence is still missing. Include security findings and any remaining risks in the preview when a review was performed.
+6. Create a preview once each required AC has adequate evidence and, in backlog mode, all implementation tasks are `VERIFIED`.
 
-Use named specialists when configured and supported. Otherwise, give a generic subagent the corresponding file from `agency/roles/` and the task brief. If delegation is unavailable, perform the roles sequentially in the main session and record `single-session QA`. For chat without workspace access, provide draft changes or review steps and request the needed execution evidence. Mark checks as `NOT_RUN` until there is an actual result.
+Use named specialists when configured and supported. Otherwise, give a generic subagent the corresponding file from `agency/roles/` and the task brief. If delegation is unavailable, perform the roles sequentially in the main session. Record `single-session QA` when QA runs in the main session. For chat without workspace access, provide draft changes or review steps and request the needed execution evidence. Mark checks as `NOT_RUN` until there is an actual result.
 
 ## 4. Preview and human decision
 

@@ -1,6 +1,6 @@
 # AI Agency Template
 
-A reusable development workflow for a single ticket, a task description, or a larger feature. The main assistant acts as the Orchestrator. Planner, Backend, Frontend, and QA roles are available when the work needs them. The same workflow can run in one session or delegate to specialists.
+A reusable development workflow for a single ticket, a task description, or a larger feature. The main assistant acts as the Orchestrator. Planner, Backend, Frontend, QA, and Security Audit roles are available when the work needs them. The same workflow can run in one session or delegate to specialists.
 
 ## How it works
 
@@ -100,8 +100,17 @@ Each file in `agency/roles/` gives reusable instructions for a responsibility. T
 | [Backend](agency/roles/BACKEND.md) | Implements the assigned server, data, integration, or CLI change and reports the checks it ran. |
 | [Frontend](agency/roles/FRONTEND.md) | Implements the assigned client or UI change and reports checks and preview steps. |
 | [QA](agency/roles/QA.md) | Prepares the test plan before implementation and verifies the result against the acceptance criteria afterward. |
+| [Security Audit](agency/roles/SECURITY-AUDIT.md) | Reviews security-sensitive changes and reports findings, impact, and remediation. |
 
 The Orchestrator coordinates the work, updates the run records, and waits for your preview decision. It can use a named subagent, brief a generic subagent with the same role file, or carry out the relevant roles in sequence in one session.
+
+### Request a security audit
+
+The workflow routes security-sensitive changes to Security Audit before preview. To request a standalone, read-only review, provide the scope in a prompt.
+
+```text
+Security audit the current working-tree changes.
+```
 
 ## Improve the workflow
 

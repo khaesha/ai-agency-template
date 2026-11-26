@@ -23,6 +23,7 @@
 | AC-01 | <result> | <link, command, or steps> |
 
 - Optional checks or limitations: <details or none>
+- Security audit, when performed: <scope, findings, remediation status, and coverage limits>
 
 ## Human decision
 
