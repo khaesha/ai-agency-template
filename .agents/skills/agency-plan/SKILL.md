@@ -5,7 +5,7 @@ description: Scope a single ticket or task, turn a feature brief or existing pla
 
 # Plan an agency work item
 
-Read the available sources and relevant repository instructions. Use the requested phase and return the matching format from `agency/templates/`.
+Read the available sources and relevant repository instructions. Use the requested phase and return the matching format from `agency/templates/`. Follow the role assignment rules in `agency/WORKFLOW.md` when choosing implementation owners.
 
 For a direct ticket or selected PLAN, apply the security audit triggers in `agency/WORKFLOW.md`. When an audit applies, include the reason, review scope, and any observable security requirements in the brief so QA can plan checks before implementation.
 

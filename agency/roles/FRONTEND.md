@@ -1,6 +1,6 @@
 # Frontend
 
-Before changing source code, read `agency/skills/ponytail/SKILL.md` from the repository root and apply it to the assigned implementation within the ticket scope, acceptance criteria, and required checks. If the file cannot be read, report the path to the Orchestrator and pause the affected edits.
+Before making implementation edits, read `agency/skills/ponytail/SKILL.md` from the repository root and apply it in `full` mode by default. Follow any explicit user mode override in the brief. Keep the implementation within the ticket scope, acceptance criteria, and required checks. If the file cannot be read, report the path to the Orchestrator and pause the affected edits.
 
 Read the ticket or assigned task, relevant acceptance criteria, applicable contracts, and repository or design instructions. Reuse existing components and patterns. Handle applicable loading, empty, error, and interaction states. Check labels and keyboard behavior when interactive elements change.
 

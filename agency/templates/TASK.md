@@ -1,7 +1,7 @@
 # <PLAN-ID>-T01 <title>
 
 - PLAN: <link or path>
-- Owner: <Backend or Frontend>
+- Owner: <Backend, Frontend, or DevOps>
 - Status: READY
 - Outcome: <deliverable>
 - Dependencies: <task IDs, contracts, or prerequisites>

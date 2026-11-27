@@ -1,6 +1,6 @@
 # AI Agency Template
 
-A reusable development workflow for a single ticket, a task description, or a larger feature. The main assistant acts as the Orchestrator. Planner, Backend, Frontend, Code Reviewer, QA, and Security Audit roles are available when the work needs them. The same workflow can run in one session or delegate to specialists.
+A reusable development workflow for a single ticket, a task description, or a larger feature. The main assistant acts as the Orchestrator. Planner, Backend, Frontend, DevOps, Code Reviewer, QA, and Security Audit roles are available when the work needs them. The same workflow can run in one session or delegate to specialists.
 
 ## How it works
 
@@ -32,7 +32,7 @@ A `Plan` request stops after the test plan in direct mode or after the backlog i
 2. Open that root in your assistant. The table below shows the optional files for native agent integration. Review the files before enabling them or granting workspace trust.
 3. Edit [agency/PROJECT.md](agency/PROJECT.md) if you want reusable defaults for sources, code areas, test commands, or preview steps. You can leave the defaults as supplied and specify everything needed for a single run in your prompt.
 
-Copying `agency/` also brings the [Ponytail skill](agency/skills/ponytail/SKILL.md) and its [license](agency/skills/ponytail/LICENSE). The [upstream metadata](agency/skills/ponytail/upstream.json) records the bundled version. Frontend and Backend read the bundled skill from the project before changing source code, including in single-session runs. It works without a separate Ponytail installation. If the bundled file cannot be read, restore it before resuming the blocked implementation.
+Copying `agency/` also brings the [Ponytail skill](agency/skills/ponytail/SKILL.md) and its [license](agency/skills/ponytail/LICENSE). The [upstream metadata](agency/skills/ponytail/upstream.json) records the bundled version. Backend, Frontend, and DevOps apply the bundled skill in `full` mode by default, including in single-session runs. It works without a separate Ponytail installation. If the bundled file cannot be read, restore it before resuming the blocked implementation.
 
 | Assistant | Setup | How to start |
 | --- | --- | --- |
@@ -45,17 +45,23 @@ Use the same prompt with or without custom agents. A chat-only assistant needs t
 
 ### Install with an AI assistant
 
-Open the destination project in an assistant with workspace access. Give it the path to the template checkout or archive.
+Open the destination project in an assistant with workspace access. Replace `<project_name>` with the destination project name and `<template-path-or-archive>` with the source path.
 
 ```text
-Install AI Agency in this project from <template-path-or-archive>.
+Install AI Agency in this <project_name> from <template-path-or-archive>.
 Read the template README and follow its AI installation rules, including .gitignore verification.
+
+Adapt the AI Agency template to <project_name>.
+Read the repository and its existing instructions.
+Populate agency/PROJECT.md with verified paths, commands, and conventions.
+Update role or skill files where <project_name> needs a recurring change in responsibilities or procedure.
 ```
 
 1. Use the template's README as the guide. Extract an archive outside the destination project, then copy the shared workflow and the adapters for the requested assistant. Use the current assistant's adapters if it is supported and none were requested. Keep the archive, the template README, and `.github/workflows/update-ponytail.yml` with the source template.
 2. Check destination paths before copying. Preserve existing project files and report conflicting paths. If a project file already occupies the root `AGENTS.md`, install the template's instructions as `agency/AGENTS.md`. Add an import of that copy to any newly installed `CLAUDE.md` or `GEMINI.md` alongside its import of the project's root `AGENTS.md`. Preserve any existing `CLAUDE.md` and `GEMINI.md`. When the assistant needs help loading the Agency instructions, ask it to read the installed `AGENTS.md` or `agency/AGENTS.md`, or use the portable workflow prompt below.
 3. In the destination `.gitignore`, add or update one block between `# BEGIN AI Agency` and `# END AI Agency`. Preserve the rest of the file. Add a root-relative rule for each installed file, such as `/agency/WORKFLOW.md`, `/.agents/skills/agency-orchestrate/SKILL.md`, or `/.codex/agents/backend.toml`. Include any new instruction files and keep previous AI Agency entries on reruns without duplicating them. Use file paths so project files in shared directories remain eligible for commits. Add the rules before copying new files.
-4. From the destination, verify every installed path with `git check-ignore` and check for tracked or staged paths with `git ls-files -- <paths>`. Report any path that Git still sees, including already tracked template files. Leave the index untouched. If the destination is outside a Git repository, write the rules and report that Git verification is pending.
+4. When adaptation is requested, read the destination project instructions, code layout, and existing scripts or configuration. Fill `agency/PROJECT.md` with paths, commands, and conventions confirmed in the repository. Leave unverified entries blank. Update installed roles or skills where a recurring project responsibility or procedure needs it. Include any new Agency file in the ignore block before writing it.
+5. After copying and any adaptation, verify every installed path from the destination with `git check-ignore` and check for tracked or staged paths with `git ls-files -- <paths>`. Report any path that Git still sees, including already tracked template files. Leave the index untouched. If the destination is outside a Git repository, write the rules and report that Git verification is pending.
 
 ## 2. Choose a starting point
 
@@ -113,6 +119,7 @@ Each file in `agency/roles/` gives reusable instructions for a responsibility. T
 | [Planner](agency/roles/PLANNER.md) | Turns the input into a scoped ticket, backlog, or PLAN breakdown with acceptance criteria. |
 | [Backend](agency/roles/BACKEND.md) | Implements the assigned server, data, integration, or CLI change and reports the checks it ran. |
 | [Frontend](agency/roles/FRONTEND.md) | Implements the assigned client or UI change and reports checks and preview steps. |
+| [DevOps](agency/roles/DEVOPS.md) | Implements and verifies scoped changes to CI/CD, builds, infrastructure, deployment configuration, or observability. |
 | [Code Reviewer](agency/roles/CODE-REVIEWER.md) | Reviews the integrated change for correctness, regressions, compatibility, and maintainability. |
 | [QA](agency/roles/QA.md) | Prepares the test plan before implementation and verifies the result against the acceptance criteria afterward. |
 | [Security Audit](agency/roles/SECURITY-AUDIT.md) | Reviews security-sensitive changes and reports findings, impact, and remediation. |
@@ -153,10 +160,10 @@ The [update workflow](.github/workflows/update-ponytail.yml) belongs in the temp
 
 | Path | What it contains |
 | --- | --- |
-| [agency/PROJECT.md](agency/PROJECT.md) | Optional defaults that you can edit by hand. |
+| [agency/PROJECT.md](agency/PROJECT.md) | Project defaults that you can edit or populate through the AI installation prompt. |
 | [agency/WORKFLOW.md](agency/WORKFLOW.md) | Intake, execution, QA, and review rules. |
 | `agency/roles/` | Shared role instructions for all assistants. |
-| `agency/skills/ponytail/` | Bundled implementation skill used by Backend and Frontend. |
+| `agency/skills/ponytail/` | Bundled implementation skill used by Backend, Frontend, and DevOps. |
 | `.agents/skills/` | Shared orchestration, planning, and verification skills. |
 | `agency/templates/` | Markdown formats used to write run records. |
 | `agency/runs/<run-id>/` | Ticket or backlog, work evidence, and preview history. Created when you start a run. |

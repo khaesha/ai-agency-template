@@ -1,6 +1,6 @@
 # Project defaults
 
-Edit this file by hand as needed. Every entry is optional. Leave a value blank or set it to `N/A` when it does not apply. Give run-specific overrides in the prompt.
+Edit this file as needed. Every entry is optional. Leave a value blank or set it to `N/A` when it does not apply. Give run-specific overrides in the prompt.
 
 | Setting | Default |
 | --- | --- |
@@ -11,6 +11,7 @@ Edit this file by hand as needed. Every entry is optional. Leave a value blank o
 | Other sources, such as designs or API contracts | |
 | Backend paths and related tests | |
 | Frontend paths and related tests | |
+| DevOps paths and related checks | |
 | Shared code, configuration, or schemas | |
 | Local setup and runtime commands | |
 | Test, lint, type-check, or integration commands | |
