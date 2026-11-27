@@ -28,7 +28,7 @@ A `Plan` request stops after the test plan in direct mode or after the backlog i
 
 ## 1. Add the template to your project
 
-1. Extract the archive and copy `agency/` and `.agents/` into the root of the repository or workspace where you want to work. Copy `AGENTS.md` if the project has no file at that path. For a shared installation, you can also add its **AI Agency workflow** section to the instructions you already use. Preserve existing project instructions and check for path conflicts before copying. For a local installation, apply the `.gitignore` rules below. Keep this README with the template as an installation guide.
+1. Extract the archive and copy `agency/` and `.agents/` into the root of the repository or workspace where you want to work. Copy the template's `LICENSE` to `agency/LICENSE` in the destination. Copy `AGENTS.md` if the project has no file at that path. For a shared installation, you can also add its **AI Agency workflow** section to the instructions you already use. Preserve existing project instructions and check for path conflicts before copying. For a local installation, apply the `.gitignore` rules below. Keep this README with the template as an installation guide.
 2. Open that root in your assistant. The table below shows the optional files for native agent integration. Review the files before enabling them or granting workspace trust.
 3. Edit [agency/PROJECT.md](agency/PROJECT.md) if you want reusable defaults for sources, code areas, test commands, or preview steps. You can leave the defaults as supplied and specify everything needed for a single run in your prompt.
 
@@ -57,7 +57,7 @@ Populate agency/PROJECT.md with verified paths, commands, and conventions.
 Update role or skill files where <project_name> needs a recurring change in responsibilities or procedure.
 ```
 
-1. Use the template's README as the guide. Extract an archive outside the destination project, then copy the shared workflow and the adapters for the requested assistant. Use the current assistant's adapters if it is supported and none were requested. Keep the archive, the template README, and `.github/workflows/update-ponytail.yml` with the source template.
+1. Use the template's README as the guide. Extract an archive outside the destination project, then copy the shared workflow and the adapters for the requested assistant. Include the template's `LICENSE` as `agency/LICENSE` in the destination and treat it as an installed path in the checks below. Use the current assistant's adapters if it is supported and none were requested. Keep the archive, the template README, and `.github/workflows/update-ponytail.yml` with the source template.
 2. Check destination paths before copying. Preserve existing project files and report conflicting paths. If a project file already occupies the root `AGENTS.md`, install the template's instructions as `agency/AGENTS.md`. Add an import of that copy to any newly installed `CLAUDE.md` or `GEMINI.md` alongside its import of the project's root `AGENTS.md`. Preserve any existing `CLAUDE.md` and `GEMINI.md`. When the assistant needs help loading the Agency instructions, ask it to read the installed `AGENTS.md` or `agency/AGENTS.md`, or use the portable workflow prompt below.
 3. In the destination `.gitignore`, add or update one block between `# BEGIN AI Agency` and `# END AI Agency`. Preserve the rest of the file. Add a root-relative rule for each installed file, such as `/agency/WORKFLOW.md`, `/.agents/skills/agency-orchestrate/SKILL.md`, or `/.codex/agents/backend.toml`. Include any new instruction files and keep previous AI Agency entries on reruns without duplicating them. Use file paths so project files in shared directories remain eligible for commits. Add the rules before copying new files.
 4. When adaptation is requested, read the destination project instructions, code layout, and existing scripts or configuration. Fill `agency/PROJECT.md` with paths, commands, and conventions confirmed in the repository. Leave unverified entries blank. Update installed roles or skills where a recurring project responsibility or procedure needs it. Include any new Agency file in the ignore block before writing it.
@@ -169,3 +169,11 @@ The [update workflow](.github/workflows/update-ponytail.yml) belongs in the temp
 | `agency/runs/<run-id>/` | Ticket or backlog, work evidence, and preview history. Created when you start a run. |
 
 Client documentation [Codex subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents) · [Claude Code subagents](https://code.claude.com/docs/en/sub-agents) and [skills](https://code.claude.com/docs/en/skills) · [Gemini CLI subagents](https://geminicli.com/docs/core/subagents/) and [skills](https://geminicli.com/docs/cli/skills/)
+
+## License
+
+The original template files are available under the MIT License. You may use, modify, and redistribute them, including commercially, by retaining the copyright and permission notices in copies or substantial portions. [Template license](LICENSE)
+
+Bundled third-party skills follow their upstream licenses. Keep each skill's license and required notices with the files. For example, the bundled Ponytail skill carries a separate MIT license with DietrichGebert's copyright notice. [Ponytail license](agency/skills/ponytail/LICENSE) · [Bundled version](agency/skills/ponytail/upstream.json)
+
+Before adding, updating, or redistributing a third-party skill, verify the license and notices for the exact upstream version. Confirm permission directly with the original rights holder if the license is missing, unclear, or does not cover the intended use, modification, or redistribution.
