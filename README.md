@@ -1,6 +1,6 @@
 # AI Agency Template
 
-A reusable development workflow for a single ticket, a task description, or a larger feature. The main assistant acts as the Orchestrator. Planner, Backend, Frontend, DevOps, Code Reviewer, QA, and Security Audit roles are available when the work needs them. The same workflow can run in one session or delegate to specialists.
+A reusable development workflow for a single ticket, a task description, or a larger feature. The main assistant acts as the Orchestrator. Planner, Backend, Frontend, DevOps, Technical Writer, Code Reviewer, QA, and Security Audit roles are available when the work needs them. The same workflow can run in one session or delegate to specialists.
 
 ## How it works
 
@@ -63,6 +63,25 @@ Update role or skill files where <project_name> needs a recurring change in resp
 4. When adaptation is requested, read the destination project instructions, code layout, and existing scripts or configuration. Fill `agency/PROJECT.md` with paths, commands, and conventions confirmed in the repository. Leave unverified entries blank. Update installed roles or skills where a recurring project responsibility or procedure needs it. Include any new Agency file in the ignore block before writing it.
 5. After copying and any adaptation, verify every installed path from the destination with `git check-ignore` and check for tracked or staged paths with `git ls-files -- <paths>`. Report any path that Git still sees, including already tracked template files. Leave the index untouched. If the destination is outside a Git repository, write the rules and report that Git verification is pending.
 
+### Update an existing installation
+
+Open the installed project in an assistant with workspace access. Give it the path to the updated checkout or archive. If you still have the exact source used for the last update or installation, provide its commit or archive path so the assistant can distinguish template changes from project adaptations. The update also reviews how the installed roles and skills fit the current project. You can limit the update to a named change, such as `Apply only the Technical Writer changes`, or ask to skip the adaptation review.
+
+```text
+Update the existing AI Agency installation in this <project_name> from <updated-template-path-or-archive>.
+Read the updated template README and follow its "Update an existing installation" rules.
+Read the current repository and its existing instructions.
+Adapt the installed roles and skills to verified, recurring project changes.
+Refresh only stale or missing project defaults relevant to the update.
+Preserve run history and local adaptations that still fit the project.
+```
+
+1. Read the source README and inspect the current installation. Extract any archive outside the project. Identify the existing agent integrations and Agency instruction paths, including `agency/AGENTS.md` if the root `AGENTS.md` belongs to the project. Update the shared files and the integrations already in use. Keep the new archive, source README, and maintenance workflows with the source template.
+2. With the previous source, compare it with the updated source to identify upstream changes, then compare those paths with the project copies. Apply the upstream changes directly to unmodified Agency files and merge compatible changes into customized files. Without the previous source, add missing files needed for the update and apply small edits whose effect on local customizations is clear. Preserve the installed version and report the path when a change is ambiguous or conflicts. Report upstream removals for review before deleting anything.
+3. Keep the project's installed `agency/PROJECT.md` and refresh individual defaults only as described in the next step. Preserve `agency/runs/` and the project's own assistant instructions and imports. Copy the source template's `LICENSE` to `agency/LICENSE` if it is missing and follow the [license and notice rules](#license) for bundled third-party updates.
+4. Within the requested scope, review the destination's current instructions, code layout, scripts, tests, and configuration against its installed roles and skills, including files that received no template changes. Update responsibilities or handoffs in `agency/roles/` and repeatable procedures in Agency-owned skills when the repository confirms a recurring need. Update only relevant stale or missing entries in `agency/PROJECT.md` with verified paths, commands, or conventions. Preserve local adaptations that still apply. Keep ticket-specific details in the run and leave paths with unresolved merge conflicts for review.
+5. For a local installation, add root-relative rules for new Agency files to the `# BEGIN AI Agency` block before writing them. Create the block if needed. Preserve the rest of `.gitignore` and verify the added and updated paths with `git check-ignore` and `git ls-files -- <paths>`, as in the installation rules. For a shared installation, keep its existing tracking policy. Leave the index untouched. Summarize the changes, cite the repository evidence behind each adaptation, and report unresolved conflicts or gaps.
+
 ## 2. Choose a starting point
 
 | What you have | What to do |
@@ -120,6 +139,7 @@ Each file in `agency/roles/` gives reusable instructions for a responsibility. T
 | [Backend](agency/roles/BACKEND.md) | Implements the assigned server, data, integration, or CLI change and reports the checks it ran. |
 | [Frontend](agency/roles/FRONTEND.md) | Implements the assigned client or UI change and reports checks and preview steps. |
 | [DevOps](agency/roles/DEVOPS.md) | Implements and verifies scoped changes to CI/CD, builds, infrastructure, deployment configuration, or observability. |
+| [Technical Writer](agency/roles/TECHNICAL-WRITER.md) | Writes and verifies technical documentation, including guides, API references, runbooks, and release notes. |
 | [Code Reviewer](agency/roles/CODE-REVIEWER.md) | Reviews the integrated change for correctness, regressions, compatibility, and maintainability. |
 | [QA](agency/roles/QA.md) | Prepares the test plan before implementation and verifies the result against the acceptance criteria afterward. |
 | [Security Audit](agency/roles/SECURITY-AUDIT.md) | Reviews security-sensitive changes and reports findings, impact, and remediation. |
@@ -160,7 +180,7 @@ The [update workflow](.github/workflows/update-ponytail.yml) belongs in the temp
 
 | Path | What it contains |
 | --- | --- |
-| [agency/PROJECT.md](agency/PROJECT.md) | Project defaults that you can edit or populate through the AI installation prompt. |
+| [agency/PROJECT.md](agency/PROJECT.md) | Project defaults that you can edit or refresh through the AI installation and update prompts. |
 | [agency/WORKFLOW.md](agency/WORKFLOW.md) | Intake, execution, QA, and review rules. |
 | `agency/roles/` | Shared role instructions for all assistants. |
 | `agency/skills/ponytail/` | Bundled implementation skill used by Backend, Frontend, and DevOps. |

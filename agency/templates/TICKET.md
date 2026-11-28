@@ -8,7 +8,7 @@
 - Requested outcome: <plain English summary>
 - Scope and writable areas: <affected behavior and paths>
 - Security audit (when applicable): <reason and review scope>
-- Owner: <Backend, Frontend, DevOps, or multiple owners listed below>
+- Owner: <Backend, Frontend, DevOps, Technical Writer, or multiple owners listed below>
 - Assumptions or blockers: <reversible assumptions, missing information, or none>
 - Baseline: <initial code state, captured before implementation>
 

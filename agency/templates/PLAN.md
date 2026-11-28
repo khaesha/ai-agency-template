@@ -22,7 +22,7 @@
 
 | ID and file | Owner | Dependencies | AC |
 | --- | --- | --- | --- |
-| <PLAN-ID>-T01 | <Backend, Frontend, or DevOps> | <IDs or none> | <AC IDs> |
+| <PLAN-ID>-T01 | <Backend, Frontend, DevOps, or Technical Writer> | <IDs or none> | <AC IDs> |
 
 ## Test plan
 

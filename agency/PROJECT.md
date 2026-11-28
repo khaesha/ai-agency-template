@@ -12,6 +12,7 @@ Edit this file as needed. Every entry is optional. Leave a value blank or set it
 | Backend paths and related tests | |
 | Frontend paths and related tests | |
 | DevOps paths and related checks | |
+| Documentation paths, style guide, and checks | |
 | Shared code, configuration, or schemas | |
 | Local setup and runtime commands | |
 | Test, lint, type-check, or integration commands | |
