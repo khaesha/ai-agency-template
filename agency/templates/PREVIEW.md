@@ -29,6 +29,7 @@
 | AC-01 | <result> | <link, command, or steps> |
 
 - Optional checks or limitations: <details or none>
+- DevOps handoff (when deployment changes): <link to the handoff and summary of validation gaps>
 
 ## Security audit (when performed)
 

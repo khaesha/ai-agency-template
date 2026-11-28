@@ -14,6 +14,7 @@
 - Changed files:
 - Checks and outcomes:
 - Blockers or gaps:
+- DevOps handoff (when deployment changes): <affected environments, validation evidence and gaps, rollout success check, and rollback or recovery trigger and steps>
 
 ## QA
 

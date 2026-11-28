@@ -23,6 +23,8 @@
 
 <Use the ticket as the brief for one owner. If multiple owners are needed, list steps with their owner, scope, dependency, and applicable contract. Record changed files and checks here.>
 
+- DevOps handoff (when deployment changes): <affected environments, validation evidence and gaps, rollout success check, and rollback or recovery trigger and steps>
+
 ## Test plan
 
 | AC | Scenario and setup | Expected result | How to verify | Required |
