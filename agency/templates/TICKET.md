@@ -7,6 +7,7 @@
 - Current preview: <link or none>
 - Requested outcome: <plain English summary>
 - Scope and writable areas: <affected behavior and paths>
+- Documentation impact (when applicable): <affected paths or sections and required changes>
 - Security audit (when applicable): <reason and review scope>
 - Owner: <Backend, Frontend, DevOps, Technical Writer, or multiple owners listed below>
 - Assumptions or blockers: <reversible assumptions, missing information, or none>

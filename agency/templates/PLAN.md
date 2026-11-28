@@ -4,6 +4,7 @@
 - Sources: <relevant references>
 - In scope: <scope>
 - Out of scope: <boundary>
+- Documentation impact (when applicable): <affected paths or sections and required changes>
 - Security audit (when applicable): <reason and review scope>
 - Baseline: <Git HEAD and related local changes, or initial file state>
 - Assumptions and blockers: <notes, impacts, or decisions needed>

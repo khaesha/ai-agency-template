@@ -164,6 +164,8 @@ Each file in `agency/roles/` gives reusable instructions for a responsibility. T
 
 The Orchestrator coordinates the work, updates the run records, and waits for your preview decision. It can use a named subagent, brief a generic subagent with the same role file, or carry out the relevant roles in sequence in one session.
 
+During planning, the assistant checks whether the planned change would make existing documentation inaccurate. For example, changing an API response can require an update to its documented example even if the ticket only mentions the API. The documentation task and its acceptance criterion go into the same ticket or selected PLAN. QA checks that criterion, and the Orchestrator records the result in the same preview.
+
 The Orchestrator routes integrated changes to Code Reviewer before final QA and any security audit when the change materially affects a shared contract, data migration, or design across modules. You can also request it with `Run <run-id> with a code review`. The preview records the reviewed version and any findings.
 
 ### Request a security audit

@@ -7,7 +7,7 @@ description: Scope a single ticket or task, turn a feature brief or existing pla
 
 Read the available sources and relevant repository instructions. Use the requested phase and return the matching format from `agency/templates/`. Follow the role assignment rules in `agency/WORKFLOW.md` when choosing implementation owners.
 
-For a direct ticket or selected PLAN, apply the security audit triggers in `agency/WORKFLOW.md`. When an audit applies, include the reason, review scope, and any observable security requirements in the brief so QA can plan checks before implementation.
+For a direct ticket or selected PLAN, check documentation impact and apply the security audit triggers in `agency/WORKFLOW.md` before handing off to QA. When documentation needs updating, include the affected docs, acceptance criteria, and dependencies in the brief. When an audit applies, include the reason, review scope, and observable security requirements.
 
 ## Direct ticket
 
